@@ -20,7 +20,7 @@ async def url_shorten(url:URL):
     return {"short_code":short_code, "short_url": "http://localhost:8000/"+short_code}
 
 @app.get("/shorten/{code}")
-async def get_code( code):
+async def get_code(code:str):
     if code in urls:
         code_url= urls.get(code)
         return RedirectResponse(url=code_url)
