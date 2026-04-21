@@ -6,11 +6,6 @@ class Base(DeclarativeBase):
     pass
 engine = create_engine("sqlite:///./urldb.db",echo=True, connect_args={"check_same_thread": False})
 
-
-
-Session = sessionmaker(engine)
-
-with Session() as session:
-    session.add(obj)
-    session.commit()
+Base.metadata.create_all(bind=engine)
+Session = sessionmaker(engine, autocommit=False, autoflush=False)
 
