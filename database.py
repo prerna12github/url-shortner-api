@@ -1,0 +1,16 @@
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import DeclarativeBase
+
+class Base(DeclarativeBase):
+    pass
+engine = create_engine("sqlite:///./urldb.db",echo=True, connect_args={"check_same_thread": False})
+
+
+
+Session = sessionmaker(engine)
+
+with Session() as session:
+    session.add(obj)
+    session.commit()
+
