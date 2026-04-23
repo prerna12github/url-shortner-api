@@ -33,6 +33,8 @@ async def url_shorten(url:URL,db:Session=Depends(get_db)):
 async def get_code(code:str,db:Session=Depends(get_db)):
     db_url= db.query(URLModel).filter(URLModel.short_code==code).first()
     if db_url:
+        db_url.click += 1
+        db.commit()
         return RedirectResponse(url=db_url.original_url)
     else:
         raise HTTPException(status_code=404, detail="url not found")

@@ -13,4 +13,6 @@ class URL(Base):
     short_code : Mapped[str]=mapped_column(String,unique=True)
     original_url : Mapped[str]=mapped_column(String)
     created_at : Mapped[datetime]=mapped_column(DateTime, default=datetime.utcnow)
+    click : Mapped[int]=mapped_column(Integer, default=0)
     
+ 
