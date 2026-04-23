@@ -29,15 +29,6 @@ async def url_shorten(url:URL,db:Session=Depends(get_db)):
     db.commit()
     return {"short_code":short_code, "short_url": "http://localhost:8000/"+short_code}
 
-@app.get("/shorten/{code}")
-async def get_code(code:str,db:Session=Depends(get_db)):
-    db_url= db.query(URLModel).filter(URLModel.short_code==code).first()
-    if db_url:
-        db_url.click += 1
-        db.commit()
-        return RedirectResponse(url=db_url.original_url)
-    else:
-        raise HTTPException(status_code=404, detail="url not found")
     
 @app.get("/shorten/stats/{code}")
 async def get_stats(code:str,db:Session=Depends(get_db)):
@@ -51,4 +42,14 @@ async def get_stats(code:str,db:Session=Depends(get_db)):
         }
     else:
         raise HTTPException(status_code=404, detail="url not found")
+    
+@app.get("/shorten/{code}")
+async def get_code(code:str,db:Session=Depends(get_db)):
+         db_url= db.query(URLModel).filter(URLModel.short_code==code).first()
+         if db_url:
+            db_url.click += 1
+            db.commit()
+            return RedirectResponse(url=db_url.original_url)
+         else:
+          raise HTTPException(status_code=404, detail="url not found")
 
