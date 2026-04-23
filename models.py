@@ -1,7 +1,10 @@
 from sqlalchemy.orm import Mapped,mapped_column
 from sqlalchemy import Integer,String,DateTime
 from datetime import datetime
-from database import Base
+from sqlalchemy.orm import DeclarativeBase
+
+class Base(DeclarativeBase):
+    pass
 
 class URL(Base):
     __tablename__ = "Url_Shorten"
