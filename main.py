@@ -39,4 +39,16 @@ async def get_code(code:str,db:Session=Depends(get_db)):
     else:
         raise HTTPException(status_code=404, detail="url not found")
     
+@app.get("/shorten/stats/{code}")
+async def get_stats(code:str,db:Session=Depends(get_db)):
+    db_code=db.query(URLModel).filter(URLModel.short_code==code).first()
+    if db_code:
+        return {
+            "short_code": code,
+            "original_url": db_code.original_url,
+            "clicks": db_code.click,
+            "created_at": db_code.created_at
+        }
+    else:
+        raise HTTPException(status_code=404, detail="url not found")
 
