@@ -24,14 +24,15 @@ def read_root():
 
 @app.post("/shorten")
 async def url_shorten(url:URL,db:Session=Depends(get_db)):
-    existing = db.query(URLModel).filter(URLModel.original_url==url.url).first()
+    url_str = str(url.url) 
+    existing = db.query(URLModel).filter(URLModel.original_url==url_str).first()
     if existing:
-        return {"short_code": existing.short_code, "short_url": "http://localhost:8000/"+existing.short_code}
+        return {"short_code": existing.short_code, "short_url": "https://url-shortner-api-one.vercel.app/"+existing.short_code}
     short_code = secrets.token_urlsafe(5)
-    new_url = URLModel(short_code=short_code, original_url=url.url)
+    new_url = URLModel(short_code=short_code, original_url=url_str)
     db.add(new_url)
     db.commit()
-    return {"short_code":short_code, "short_url": "http://localhost:8000/"+short_code}
+    return {"short_code":short_code, "short_url": "https://url-shortner-api-one.vercel.app/"+short_code}
     
 @app.get("/shorten/stats/{code}")
 async def get_stats(code:str,db:Session=Depends(get_db)):
