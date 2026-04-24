@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 import secrets
 from models import URL as URLModel
 from database import Session as SessionLocal
+from datetime import datetime
 app = FastAPI()
 
 def get_db():
@@ -47,9 +48,17 @@ async def get_stats(code:str,db:Session=Depends(get_db)):
 async def get_code(code:str,db:Session=Depends(get_db)):
          db_url= db.query(URLModel).filter(URLModel.short_code==code).first()
          if db_url:
-            db_url.click += 1
-            db.commit()
-            return RedirectResponse(url=db_url.original_url)
+            now = datetime.utcnow()
+            age = now-db_url.created_at
+            days_old=age.days
+            if days_old <= 30:
+                db_url.click += 1
+                db.commit()
+                return RedirectResponse(url=db_url.original_url)
+            else:
+                raise HTTPException(status_code=404, detail="This link has expired")
          else:
           raise HTTPException(status_code=404, detail="url not found")
+    
+
 
