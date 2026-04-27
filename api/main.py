@@ -3,8 +3,8 @@ from pydantic import BaseModel, HttpUrl
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 import secrets
-from models import URL as URLModel
-from database import Session as SessionLocal
+from api.models import URL as URLModel
+from api.database import Session as SessionLocal
 from datetime import datetime
 app = FastAPI()
 
