@@ -82,6 +82,11 @@ pip install -r requirements.txt
 **3. Create a `.env` file:**
 ```
 DATABASE_URL=postgresql://your-connection-string
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 55b1ea4 (add README)
 ```
 
 **4. Run the server:**
@@ -157,3 +162,7 @@ url-shortener/
 | Variable | Description |
 |----------|-------------|
 | `DATABASE_URL` | PostgreSQL connection string |
+<<<<<<< HEAD
+=======
+>>>>>>> 8b906d7 (add README)
+>>>>>>> 55b1ea4 (add README)
