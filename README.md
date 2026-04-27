@@ -1,5 +1,4 @@
 # URL Shortener API
-
 A REST API built with FastAPI that shortens URLs, tracks clicks, and automatically expires links after 30 days.
 
 **Live Demo:** https://url-shortner-api-one.vercel.app
@@ -7,7 +6,6 @@ A REST API built with FastAPI that shortens URLs, tracks clicks, and automatical
 ---
 
 ## Features
-
 - Generate short URLs from long ones
 - Redirect users to the original URL
 - Track click count per short URL
@@ -18,7 +16,6 @@ A REST API built with FastAPI that shortens URLs, tracks clicks, and automatical
 ---
 
 ## Tech Stack
-
 - **FastAPI** — Python web framework
 - **SQLAlchemy** — ORM for database access
 - **PostgreSQL** — Database (hosted on Neon)
@@ -83,36 +80,4 @@ pip install -r requirements.txt
 ```
 
 **3. Create a `.env` file:**
-```
 DATABASE_URL=postgresql://your-connection-string
-```
-
-**4. Run the server:**
-```bash
-uvicorn main:app --reload
-```
-
-The API will be available at `http://localhost:8000`.  
-Interactive docs available at `http://localhost:8000/docs`.
-
----
-
-## Project Structure
-
-```
-url-shortener/
-├── main.py          # API routes
-├── models.py        # Database models
-├── database.py      # Database connection
-├── requirements.txt
-├── vercel.json      # Vercel deployment config
-└── .env             # Environment variables (not committed)
-```
-
----
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `DATABASE_URL` | PostgreSQL connection string |
