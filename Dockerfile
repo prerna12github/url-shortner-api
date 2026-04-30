@@ -1,13 +1,6 @@
-FROM python:3.14-slim
-
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
-
+FROM ghcr.io/astral-sh/uv:alpine3.22
 WORKDIR /app
-
-COPY api/requirements.txt .
-RUN uv pip install --system --no-cache -r requirements.txt
-
-COPY api/ .
-
+COPY . .
+RUN uv sync
 EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["fastapi", "run"]
