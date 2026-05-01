@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.requests import HTTPConnection
 from fastapi.responses import RedirectResponse
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
-from api.database import get_record, set_record
+from api.database import get_code, get_record, set_record
 
 app = FastAPI()
 
@@ -24,7 +24,12 @@ def redirect_url(short_code: str):
 
 @app.post("/shorten")
 def shorten_url(url: str):
+    base = 'www.xyz.com'
+    code = get_code(url)
+    if code:
+        return f"{base}/{code}"         
     short_code = secrets.token_urlsafe(6)
     set_record(url, short_code)
-    base = 'www.xyz.com'
     return f"{base}/{short_code}"
+
+    
