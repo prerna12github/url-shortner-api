@@ -5,6 +5,7 @@ from fastapi.requests import HTTPConnection
 from fastapi.responses import RedirectResponse
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from api.database import get_code, get_record, set_record
+import starlette.status as status
 
 app = FastAPI()
 
@@ -18,7 +19,7 @@ def read_root():
 def redirect_url(short_code: str):
     record = get_record(short_code)
     if record:
-        return f'{record}'
+        return RedirectResponse(url=record, status_code=status.HTTP_302_FOUND)
     raise HTTPException(status_code=404, detail="Not Found")
 
 
