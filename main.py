@@ -1,5 +1,6 @@
 import secrets
 from datetime import datetime
+from turtle import st
 from fastapi import FastAPI, HTTPException
 from fastapi.requests import HTTPConnection
 from fastapi.responses import RedirectResponse
@@ -20,7 +21,7 @@ def redirect_url(short_code: str):
     record = get_record(short_code)
     if record:
         return RedirectResponse(url=record, status_code=status.HTTP_302_FOUND)
-    raise HTTPException(status_code=404, detail="Not Found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
 @app.post("/shorten")
