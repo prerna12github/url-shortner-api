@@ -1,12 +1,14 @@
 import secrets
 from datetime import datetime
 from turtle import st
+from unittest import result
 from fastapi import FastAPI, HTTPException
 from fastapi.requests import HTTPConnection
 from fastapi.responses import RedirectResponse
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from api.database import get_code, get_record, set_record
 import starlette.status as status
+from urllib.parse import urlparse
 
 app = FastAPI()
 
@@ -26,6 +28,9 @@ def redirect_url(short_code: str):
 
 @app.post("/shorten")
 def shorten_url(url: str):
+    result = urlparse(url)
+    if not result.scheme or not result.netloc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL")    
     base = 'www.xyz.com'
     code = get_code(url)
     if code:
