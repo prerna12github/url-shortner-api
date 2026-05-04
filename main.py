@@ -14,8 +14,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"])
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
-
+    
 @app.get("/{short_code}")
 def redirect_url(short_code: str):
     record = get_record(short_code)
