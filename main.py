@@ -30,7 +30,7 @@ def redirect_url(short_code: str):
 def shorten_url(url: str):
     result = urlparse(url)
     if not result.scheme or not result.netloc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL")    
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL")
     base = 'www.xyz.com'
     code = get_code(url)
     if code:
