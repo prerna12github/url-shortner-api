@@ -1,9 +1,5 @@
 import secrets
-from datetime import datetime
-from turtle import st
-from unittest import result
 from fastapi import FastAPI, HTTPException
-from fastapi.requests import HTTPConnection
 from fastapi.responses import RedirectResponse
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from api.database import get_code, get_record, set_record
