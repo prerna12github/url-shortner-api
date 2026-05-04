@@ -30,7 +30,7 @@ def shorten_url(url: str):
     code = get_code(url)
     if code:
         return f"{base}/{code}"         
-    short_code = secrets.token_urlsafe(6)
+    short_code = secrets.token_urlsafe(5)
     set_record(url, short_code)
     return f"{base}/{short_code}"
 
