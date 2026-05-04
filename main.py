@@ -2,6 +2,7 @@ import secrets
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from api.database import get_code, get_record, set_record
 import starlette.status as status
 from urllib.parse import urlparse
@@ -9,6 +10,7 @@ from urllib.parse import urlparse
 app = FastAPI()
 
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
+app.add_middleware(CORSMiddleware, allow_origins=["*"])
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
