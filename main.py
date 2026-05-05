@@ -34,12 +34,11 @@ def shorten_url(url: str):
     result = urlparse(url)
     if not result.scheme or not result.netloc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL")
-    base = 'www.xyz.com'
     code = get_code(url)
     if code:
-        return f"{base}/{code}"         
+        return f"{code}"         
     short_code = secrets.token_urlsafe(5)
     set_record(url, short_code)
-    return f"{base}/{short_code}"
+    return f"{short_code}"
 
     
