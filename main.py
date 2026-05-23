@@ -30,11 +30,11 @@ def redirect_url(short_code: str):
 
 
 @app.post("/shorten")
-def shorten_url(url: str):
+async def shorten_url(url: str):
     result = urlparse(url)
     if not result.scheme or not result.netloc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL")
-    code = get_code(url)
+    code = await get_code(url)
     if code:
         return f"{code}"         
     short_code = secrets.token_urlsafe(5)

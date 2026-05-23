@@ -3,7 +3,6 @@ from datetime import datetime, timezone
 from dotenv import load_dotenv
 import psycopg
 from psycopg import Error
-import asyncio
 from glide import GlideClientConfiguration, GlideClient, NodeAddress, ServerCredentials
 
 async def get_glide_client():
@@ -53,10 +52,16 @@ def get_record(short_code: str):
         conn.rollback()
         return None
 
-def get_code(url: str):
+async def get_code(url: str):
     try:
+        client = await get_glide_client()
+        code = await client.get(url)
+        if code is not None:
+            return code
         cursor.execute("SELECT short_code FROM urls WHERE original_url = %s", (url,))
         row = cursor.fetchone()
+        if row:
+            await client.set(url, row[0])
         return row[0] if row else None
     except Error:
         return None
