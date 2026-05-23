@@ -3,6 +3,21 @@ from datetime import datetime, timezone
 from dotenv import load_dotenv
 import psycopg
 from psycopg import Error
+import asyncio
+from glide import GlideClientConfiguration, GlideClient, NodeAddress, ServerCredentials
+
+async def get_glide_client():
+    address = [NodeAddress(host=os.environ.get("REDIS_HOST","localhost"), port=int(os.environ.get("REDIS_PORT", 6379)))]
+
+    config = GlideClientConfiguration(
+        addresses=address,
+        credentials=ServerCredentials(username=os.environ.get("REDIS_USER"), password=os.environ.get("REDIS_PASS")),
+        request_timeout=500
+    )
+
+    client = await GlideClient.create(config)
+    return client
+
 
 def get_connection():
     load_dotenv()
