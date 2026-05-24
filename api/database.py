@@ -57,7 +57,7 @@ async def get_code(url: str):
         client = await get_glide_client()
         code = await client.get(url)
         if code is not None:
-            return code
+            return code.decode("utf-8")
         cursor.execute("SELECT short_code FROM urls WHERE original_url = %s", (url,))
         row = cursor.fetchone()
         if row:
