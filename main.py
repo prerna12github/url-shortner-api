@@ -13,7 +13,7 @@ app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -25,7 +25,7 @@ def read_root():
 def redirect_url(short_code: str):
     record = get_record(short_code)
     if record:
-        return RedirectResponse(url=record, status_code=status.HTTP_302_FOUND)
+        return HTTPException(status_code=status.HTTP_302_FOUND)
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
