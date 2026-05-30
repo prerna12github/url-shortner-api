@@ -25,7 +25,7 @@ def read_root():
 def redirect_url(short_code: str):
     record = get_record(short_code)
     if record:
-        return HTTPException(status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(url=record,status_code=status.HTTP_302_FOUND)
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
